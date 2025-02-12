@@ -1,22 +1,22 @@
 {
   "name": "n8n-nodes-websocket-stream",
   "version": "0.1.0",
-  "description": "A production‑ready custom n8n node for streaming data from a WebSocket connection",
+  "description": "A production-ready custom n8n node for streaming data continuously from a WebSocket connection",
   "keywords": [
     "n8n-community-node-package",
+    "n8n",
     "websocket",
-    "stream",
-    "n8n"
+    "stream"
   ],
   "license": "MIT",
   "homepage": "",
   "author": {
-    "name": "Your Name",
-    "email": "your.email@example.com"
+    "name": "",
+    "email": ""
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/n8n-nodes-websocket-stream.git"
+    "url": "https://github.com/ikabraham/n8n-nodes-websocket-stream.git"
   },
   "engines": {
     "node": ">=18.10",
@@ -26,10 +26,10 @@
   "scripts": {
     "build": "tsc && gulp build:icons",
     "dev": "tsc --watch",
-    "format": "prettier nodes credentials --write",
-    "lint": "eslint nodes credentials package.json",
-    "lintfix": "eslint nodes credentials package.json --fix",
-    "prepublishOnly": "pnpm build"
+    "format": "prettier --write \"src/**/*.{ts,js,json,md}\"",
+    "lint": "eslint src --ext .ts",
+    "lintfix": "eslint src --ext .ts --fix",
+    "prepublishOnly": "pnpm run build"
   },
   "files": [
     "dist"
