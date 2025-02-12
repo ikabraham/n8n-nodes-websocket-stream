@@ -1,0 +1,47 @@
+{
+  "name": "n8n-nodes-websocket-stream",
+  "version": "0.1.0",
+  "description": "A custom n8n node for streaming WebSocket data continuously",
+  "keywords": [
+    "n8n-community-node-package",
+    "websocket",
+    "stream",
+    "n8n"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ikabraham/n8n-nodes-websocket-stream.git"
+  },
+  "engines": {
+    "node": ">=18.10"
+  },
+  "main": "dist/nodes/WebSocketStream.node.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.{ts,js,json,md}\""
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "nodes": [
+      "dist/nodes/WebSocketStream.node.js"
+    ]
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.3",
+    "@types/node": "^18.0.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.3.2"
+  }
+}
