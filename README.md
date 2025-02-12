@@ -16,3 +16,8 @@ Install the package from npm:
 
 ```bash
 npm install n8n-nodes-websocket-stream
+```
+## May need to add the following with uploading to npm via Codespace
+
+```bash
+pnpm add -D @types/ws @types/node
