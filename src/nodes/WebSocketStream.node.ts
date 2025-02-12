@@ -3,13 +3,11 @@ import {
     INodeExecutionData,
     INodeType,
     INodeTypeDescription,
-    ITriggerResponse
+    ITriggerResponse,
+    NodeConnectionType,
 } from "n8n-workflow";
+import WebSocket from 'ws';
 
-/**
- * WebSocketStream node establishes a persistent WebSocket connection to the given URL.
- * It streams each incoming message to the workflow as a new execution item.
- */
 export class WebSocketStream implements INodeType {
     description: INodeTypeDescription = {
         displayName: "WebSocket Stream",
@@ -21,7 +19,10 @@ export class WebSocketStream implements INodeType {
             name: "WebSocket Stream",
         },
         inputs: [],
-        outputs: ['main'], // Changed to single quotes
+        outputs: [{
+            type: NodeConnectionType.Main,
+            displayName: 'Output',
+        }],
         properties: [
             {
                 displayName: "WebSocket URL",
@@ -41,15 +42,13 @@ export class WebSocketStream implements INodeType {
         ],
     };
 
-    async trigger(this: ITriggerFunctions): Promise<ITriggerResponse> { // Changed return type
-        // Retrieve node parameters.
+    async trigger(this: ITriggerFunctions): Promise<ITriggerResponse> {
         const url = this.getNodeParameter("url", 0) as string;
         const reconnect = this.getNodeParameter("reconnect", 0) as boolean;
-        const WebSocket = require("ws");
-        let ws: any;
+
+        let ws: WebSocket;
         let isActive = true;
 
-        // Function to establish and maintain the WebSocket connection.
         const connect = () => {
             ws = new WebSocket(url);
 
@@ -57,7 +56,7 @@ export class WebSocketStream implements INodeType {
                 this.logger.info(`Connected to WebSocket at ${url}`);
             });
 
-            ws.on("message", (message: string) => {
+            ws.on("message", (message: Buffer | ArrayBuffer | Buffer[]) => {
                 const newItem: INodeExecutionData = {
                     json: { message: message.toString() },
                 };
@@ -77,10 +76,8 @@ export class WebSocketStream implements INodeType {
             });
         };
 
-        // Establish the initial connection.
         connect();
 
-        // Return the close function in ITriggerResponse
         return {
             closeFunction: async () => {
                 isActive = false;
