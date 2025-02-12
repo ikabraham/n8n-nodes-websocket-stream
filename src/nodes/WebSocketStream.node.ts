@@ -5,6 +5,10 @@ import {
 	INodeTypeDescription,
 } from "n8n-workflow";
 
+/**
+ * WebSocketStream node establishes a persistent WebSocket connection to the given URL.
+ * It streams each incoming message to the workflow as a new execution item.
+ */
 export class WebSocketStream implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: "WebSocket Stream",
@@ -37,17 +41,15 @@ export class WebSocketStream implements INodeType {
 	};
 
 	async trigger(this: ITriggerFunctions): Promise<() => Promise<void>> {
-		// Read node parameters.
+		// Retrieve node parameters.
 		const url = this.getNodeParameter("url", 0) as string;
 		const reconnect = this.getNodeParameter("reconnect", 0) as boolean;
-
-		// Import the ws package.
 		const WebSocket = require("ws");
 
-		// Function to establish and maintain the connection.
 		let ws: any;
 		let isActive = true;
 
+		// Function to establish and maintain the WebSocket connection.
 		const connect = () => {
 			ws = new WebSocket(url);
 
@@ -56,14 +58,14 @@ export class WebSocketStream implements INodeType {
 			});
 
 			ws.on("message", (message: string) => {
-				// Each incoming message is emitted as a new workflow item.
-				const newItem: INodeExecutionData = { json: { message: message.toString() } };
-				this.emit([ [newItem] ]);
+				const newItem: INodeExecutionData = {
+					json: { message: message.toString() },
+				};
+				this.emit([[newItem]]);
 			});
 
 			ws.on("close", () => {
 				this.logger.info("WebSocket connection closed");
-				// Optionally reconnect if the node is still active.
 				if (isActive && reconnect) {
 					setTimeout(connect, 1000);
 				}
@@ -71,15 +73,14 @@ export class WebSocketStream implements INodeType {
 
 			ws.on("error", (error: Error) => {
 				this.logger.error(`WebSocket error: ${error}`);
-				// Close the socket on error so that 'close' is emitted.
 				ws.close();
 			});
 		};
 
-		// Establish the connection.
+		// Establish the initial connection.
 		connect();
 
-		// Return the close function that is called when the workflow is deactivated.
+		// Return the function that will be called when the workflow is deactivated.
 		return async () => {
 			isActive = false;
 			if (ws && ws.readyState === WebSocket.OPEN) {
