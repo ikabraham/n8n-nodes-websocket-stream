@@ -11,6 +11,6 @@ dist/
 .DS_Store
 Thumbs.db
 
-# Editor config files
+# Editor directories
 .vscode/
 .idea/
