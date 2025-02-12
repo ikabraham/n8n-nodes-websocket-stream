@@ -10,7 +10,7 @@ A production-ready custom n8n node for streaming data continuously from a WebSoc
 - **Type Declarations & Source Maps:** Generates declaration files and source maps for improved developer experience.
 - **Community Node Format:** Configured to work with the standard file layout (nodes and credentials folders) expected by n8n community nodes.
 
-## Installation
+## Installation 
 
 Install the package from npm:
 
