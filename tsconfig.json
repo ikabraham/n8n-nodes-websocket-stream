@@ -1,15 +1,29 @@
 {
   "compilerOptions": {
-    "lib": ["ES2020"],
-    "module": "commonjs",
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "target": "ES2020",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "target": "es2019",        // Recommended for latest n8n
+    "module": "commonjs",       // Required for n8n nodes
+    "declaration": true,       // Generate .d.ts files for type definitions
+    "outDir": "./dist",          // Output directory for compiled JavaScript files
+    "strict": true,             // Enable strict type checking
+    "esModuleInterop": true,    // Allow importing CommonJS modules as ES modules
+    "skipLibCheck": true,       // Skip type checking of declaration files
+    "forceConsistentCasingInFileNames": true,  // Enforce consistent casing
+    "moduleResolution": "node",  // Use Node.js module resolution
+    "sourceMap": true,          // Generate source maps for debugging
+    "typeRoots": [
+      "node_modules/@types"    // Location of type definition files
+    ],
+    "types": [
+      "node",                 // Include Node.js type definitions
+      "ws"                    // Include WebSocket type definitions
+    ]
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules/**/*", "dist/**/*"]
+  "include": [
+    "nodes/**/*",              // Include all TypeScript files in the "nodes" directory
+    "credentials/**/*"       // Include all TypeScript files in the "credentials" directory (if you have one)
+  ],
+  "exclude": [
+    "node_modules",            // Exclude the "node_modules" directory
+    "dist"                    // Exclude the "dist" directory
+  ]
 }
