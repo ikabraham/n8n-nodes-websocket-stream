@@ -22,7 +22,7 @@
     "node": ">=18.10",
     "pnpm": ">=9.1"
   },
-  "main": "dist/nodes/WebSocketStream.node.js",
+  "main": "index.js",
   "scripts": {
     "build": "tsc && gulp build:icons",
     "dev": "tsc --watch",
@@ -37,7 +37,7 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "nodes": [
-      "dist/nodes/WebSocketStream.node.js"
+      "dist/src/nodes/WebSocketStream.node.js"
     ]
   },
   "peerDependencies": {
